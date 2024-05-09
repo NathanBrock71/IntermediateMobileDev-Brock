@@ -1,84 +1,96 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Models;
-using Newtonsoft.Json;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MoviesAPI.Services;
 
 namespace MoviesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class MovieController : ControllerBase
-    { 
-        private readonly string _filePath = "Movies.json";
+    {
+        private readonly DbServices _dbServices;
 
-        // GET: api/<MovieController>
+        public MovieController(DbServices dbServices)
+        {
+            _dbServices = dbServices;
+        }
+
+        // GET: api/Movie
         [HttpGet(Name = "GetMovies")]
-        public Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public ActionResult<IEnumerable<Movie>> GetMovies()
         {
-            var moviesJson = System.IO.File.ReadAllText(_filePath);
-            var movies = JsonConvert.DeserializeObject<MovieList>(moviesJson);
-            movies = movies;
-            return Task.FromResult<ActionResult<IEnumerable<Movie>>>(movies.Movies);
-        }
+            var movies = _dbServices.GetAllMovies();
 
-        // GET api/<MovieController>/5
-        [HttpGet("{id}")]
-        public Task<ActionResult<Movie>> GetMovie(Guid id)
-        {
-            var moviesJson = System.IO.File.ReadAllText(_filePath);
-            var movies = JsonConvert.DeserializeObject<MovieList>(moviesJson);
-            var movie = movies.Movies.FirstOrDefault(m => m.Id == id);
-
-            //if the coffee is null, return a 404.
-            return Task.FromResult<ActionResult<Movie>>(Ok(movie));
-        }
-
-        // POST api/<MovieController>
-        [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie([FromBody] Movie movie)
-        {
-            var moviesJson = System.IO.File.ReadAllText(_filePath);
-            var movies = JsonConvert.DeserializeObject<MovieList>(moviesJson);
-
-            movies.Movies.Add(movie);
-
-            var updatedJson = JsonConvert.SerializeObject(movies, Formatting.Indented);
-            await System.IO.File.WriteAllTextAsync(_filePath, updatedJson);
-
-
+            // This method returns a 200 (OK) status code
             return Ok(movies);
         }
 
-        // PUT api/<MovieController>/5
-        [HttpPut("{id}")]
-        public async Task<Movie> PutMovie(Guid id, string title, string description, string director, string rating, string releaseDate, string reviewScore)
+        // GET api/Movie/5
+        [HttpGet("{id}")]
+        public ActionResult<Movie> GetMovie(Guid id)
         {
-            var moviesJson = System.IO.File.ReadAllText(_filePath);
-            var movies = JsonConvert.DeserializeObject<MovieList>(moviesJson);
-            var movie = movies.Movies.FirstOrDefault(m => m.Id == id);
+            var movie = _dbServices.GetMovieById(id);
             if (movie == null)
             {
-                throw new KeyNotFoundException($"Movie with ID {id} not found.");
+                // This method returns a 404 (Not Found) status code
+                return NotFound();
             }
 
-            movie.Title = title;
-            movie.Description = description;
-            movie.Director = director;
-            movie.Rating = rating;
-            movie.ReleaseDate = releaseDate;
-            movie.ReviewScore = reviewScore;
-
-            var updatedJson = JsonConvert.SerializeObject(movies, Formatting.Indented);
-            await System.IO.File.WriteAllTextAsync(_filePath, updatedJson);
-
-            return movie;
+            // This method returns a 200 (OK) status code
+            return Ok(movie);
         }
 
-        // DELETE api/<MovieController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // POST api/Movie
+        [HttpPost]
+        public ActionResult<Movie> PostMovie([FromBody] Movie movie)
         {
+            _dbServices.AddMovie(movie);
+
+            //This method returns a 201(Created) status code
+            return CreatedAtRoute("GetMovies", new { id = movie.Id }, movie);
+        }
+
+        // PUT api/Movie/5
+        [HttpPut("{id}")]
+        public ActionResult<Movie> PutMovie(Guid id, [FromBody] Movie movie)
+        {
+            var existingMovie = _dbServices.GetMovieById(id);
+            if (existingMovie == null)
+            {
+                // This method returns a 404 (Not Found) status code
+                return NotFound();
+            }
+
+            existingMovie.Title = movie.Title;
+            existingMovie.Description = movie.Description;
+            existingMovie.Director = movie.Director;
+            existingMovie.Rating = movie.Rating;
+            existingMovie.ReleaseDate = movie.ReleaseDate;
+            existingMovie.ReviewScore = movie.ReviewScore;
+
+            _dbServices.UpdateMovie(existingMovie);
+            // This method returns an empty response with a status code of 204 (No Content)
+            return NoContent();
+        }
+
+        // DELETE api/Movie/5
+        [HttpDelete("{id}")]
+        public ActionResult DeleteMovie(Guid id)
+        {
+            var existingMovie = _dbServices.GetMovieById(id);
+            if (existingMovie == null)
+            {
+                // This method returns a 404 (Not Found) status code
+                return NotFound();
+            }
+
+            _dbServices.DeleteMovieById(id);
+            // This method returns an empty response with a status code of 204 (No Content)
+            return NoContent();
         }
     }
 }

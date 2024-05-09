@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using MoviesAPI.Models;
+using MoviesAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
-
+var appConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 // Add services to the container.
-
+builder.Services.AddDbContext<MoviesDBContext>(options => options.UseSqlServer(appConnectionString));
+builder.Services.AddTransient<DbServices>(); // Register DbServices as transient
+builder.Services.AddScoped<MoviesDBContext>(); // Register MoviesDBContext as scoped
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
