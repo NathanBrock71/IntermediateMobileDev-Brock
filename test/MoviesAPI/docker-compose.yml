@@ -1,0 +1,17 @@
+﻿services:
+  web_api:
+    build: . # build the Docker image 
+    container_name: MoviesAPI
+    ports:
+      - "5000:80"
+  sql:
+    image: "rapidfort/microsoft-sql-server-2019-ib:latest"
+    container_name: MoviesDB
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433" 
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=P@ssword123"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "container=oci"
+      - "MSSQL_RPC_PORT=135"

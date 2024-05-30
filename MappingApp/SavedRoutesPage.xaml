@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MappingApp.SavedRoutesPage"
+             Title="SavedRoutesPage">
+    <StackLayout>
+        <Label Text="Saved Routes" 
+               HorizontalOptions="Center"
+               VerticalOptions="StartAndExpand" />
+
+        <CollectionView ItemsSource="{Binding SavedRoutes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding RouteName}" />
+                        <Button Text="View Route" Command="{Binding ViewRouteCommand}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "sqlite1": {
+      "secretStore": "LocalSecretsFile",
+      "type": "sqlite.local",
+      "connectionId": "DefaultConnection",
+      "dynamicId": null
+    },
+    "mssql1": {
+      "serviceConnectorResourceId": "",
+      "containerPorts": "1433:1433",
+      "secretStore": "LocalSecretsFile",
+      "containerName": "IntMobileMovies",
+      "containerImage": "rapidfort/microsoft-sql-server-2019-ib:latest",
+      "type": "mssql.container",
+      "connectionId": "DefaultConnection2",
+      "dynamicId": null
+    }
+  }
+}

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesAPI", "MoviesAPI.csproj", "{89CB436D-7DBF-4E83-BDCE-A03A0176EF64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoviesAPI", "MoviesAPI.csproj", "{89CB436D-7DBF-4E83-BDCE-A03A0176EF64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieMobileApp", "..\MovieMobileApp\MovieMobileApp.csproj", "{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{89CB436D-7DBF-4E83-BDCE-A03A0176EF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89CB436D-7DBF-4E83-BDCE-A03A0176EF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89CB436D-7DBF-4E83-BDCE-A03A0176EF64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC6C4D4-0947-4670-8274-EC8F27E5FD3D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieMobileApp.Views.MovieList"
+             Title="MovieList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="add" Command="{Binding AddItemCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="Center">
+            <Grid HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" FontSize="24" Text="Coffees" Margin="5,0,5,0" FontAttributes="Bold"/>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding Coffees}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Image Source="{Binding ImageURL}" Aspect="AspectFill" HeightRequest="100" WidthRequest="80"/>
+                                <Label Text="{Binding Name}" FontSize="24" FontAttributes="Bold"/>
+                                <Label Text="{Binding CostString}" VerticalOptions="Center" HorizontalOptions="End" FontSize="16"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:Class="MappingApp.CreateRoutePage"
+             Title="CreateRoutePage">
+    <StackLayout>
+
+        <maps:Map x:Name="routeMap" 
+                  VerticalOptions="FillAndExpand" 
+                  IsShowingUser="true" 
+                  MapClicked="OnMapClicked"/>
+        <Entry Placeholder="Start Location" x:Name="startLocationEntry" Unfocused="SetPinToLocation" Completed="SetPinToLocation"/>
+        <Button Text="Pin Location" x:Name="startPinButton" Clicked="AddLocationFromPin"></Button>
+        <Entry Placeholder="End Location" x:Name="endLocationEntry" Unfocused="SetPinToLocation" Completed="SetPinToLocation"/>
+        <Button Text="Pin Location" x:Name="endPinButton" Clicked="AddLocationFromPin"></Button>
+        <Button Text="Create Route" 
+                Command="{Binding CreateRouteCommand}" />
+
+    </StackLayout>
+</ContentPage>
