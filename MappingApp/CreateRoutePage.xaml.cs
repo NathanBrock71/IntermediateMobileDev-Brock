@@ -9,7 +9,7 @@ public partial class CreateRoutePage : ContentPage
     public CreateRoutePage()
     {
         InitializeComponent();
-        BindingContext = App.Current.Services.GetService<CreateRoutePageViewModel>();
+        BindingContext = new CreateRoutePageViewModel(); ;
     }
 
     private void OnMapClicked(object sender, MapClickedEventArgs e)

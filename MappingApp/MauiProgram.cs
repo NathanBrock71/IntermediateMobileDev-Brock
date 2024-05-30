@@ -19,7 +19,6 @@ namespace MappingApp
                 });
 
             builder.Services.AddSingleton<APIServices>();
-            builder.Services.AddTransient<CreateRoutePageViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

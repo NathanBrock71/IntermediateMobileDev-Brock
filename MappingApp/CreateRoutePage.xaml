@@ -9,13 +9,24 @@
         <maps:Map x:Name="routeMap" 
                   VerticalOptions="FillAndExpand" 
                   IsShowingUser="true" 
-                  MapClicked="OnMapClicked"/>
-        <Entry Placeholder="Start Location" x:Name="startLocationEntry" Unfocused="SetPinToLocation" Completed="SetPinToLocation"/>
-        <Button Text="Pin Location" x:Name="startPinButton" Clicked="AddLocationFromPin"></Button>
-        <Entry Placeholder="End Location" x:Name="endLocationEntry" Unfocused="SetPinToLocation" Completed="SetPinToLocation"/>
-        <Button Text="Pin Location" x:Name="endPinButton" Clicked="AddLocationFromPin"></Button>
+                  MapClicked="OnMapClicked" />
+        <Entry Placeholder="Start Location" 
+               x:Name="startLocationEntry" 
+               Text="{Binding StartLocation, Mode=TwoWay}"
+               Unfocused="SetPinToLocation" 
+               Completed="SetPinToLocation" />
+        <Button Text="Pin Location" 
+                x:Name="startPinButton" 
+                Clicked="AddLocationFromPin" />
+        <Entry Placeholder="End Location" 
+               x:Name="endLocationEntry" 
+               Text="{Binding EndLocation, Mode=TwoWay}"
+               Unfocused="SetPinToLocation" 
+               Completed="SetPinToLocation" />
+        <Button Text="Pin Location" 
+                x:Name="endPinButton" 
+                Clicked="AddLocationFromPin" />
         <Button Text="Create Route" 
                 Command="{Binding CreateRouteCommand}" />
-
     </StackLayout>
 </ContentPage>
