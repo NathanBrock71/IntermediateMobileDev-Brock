@@ -56,14 +56,20 @@ namespace MappingApp.ViewModels
 
                 await _dbService.AddRouteAsync(newRoute);
 
+                // Clear inputs
+                StartLocation = string.Empty;
+                EndLocation = string.Empty;
+                RouteName = string.Empty;
 
+                // Navigate to SavedRoutesPage
+                await Shell.Current.GoToAsync("///SavedRoutesPage");
             }
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
 
-            
+
         }
 
         public async Task<Location> CreateLocation(string locationString)

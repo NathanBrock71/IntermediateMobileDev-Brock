@@ -11,6 +11,8 @@ namespace MappingApp.ViewModels
     public class RouteMapPageViewModel : BaseViewModel
     {
         public Route CurrentRoute { get; }
+        public string Distance { get; set; }
+        public string Duration { get; set; }
         public ICommand DeleteRouteCommand { get; }
 
         public RouteMapPageViewModel(Route route)
@@ -28,6 +30,8 @@ namespace MappingApp.ViewModels
             if (CurrentRoute != null)
             {
                 await _dbService.RemoveRouteAsync(CurrentRoute);
+                // Navigate to SavedRoutesPage
+                await Shell.Current.GoToAsync("///SavedRoutesPage");
             }
         }
 

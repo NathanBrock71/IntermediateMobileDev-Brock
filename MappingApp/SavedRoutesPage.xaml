@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MappingApp.ViewModels"
              x:Class="MappingApp.SavedRoutesPage"
-             Title="SavedRoutesPage">
+             Title="Saved Routes">
     <ContentPage.BindingContext>
         <viewModels:SavedRoutesPageViewModel />
     </ContentPage.BindingContext>
@@ -14,7 +14,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
-                        <Label Text="{Binding Name, StringFormat='{0:F2}'}" TextColor="White" Background="Black"/>
+                        <Label Text="{Binding Name, StringFormat='{0:F2}'}" TextColor="MediumPurple" Background="Black" FontSize="Large" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

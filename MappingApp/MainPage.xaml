@@ -5,7 +5,11 @@
              x:Class="MappingApp.MainPage">
 
     <StackLayout>
-        <Label Text="Welcome to Your App!" 
+        <Image Source="google_map_api.jpg"></Image>
+        <Label Text="Welcome to My Mapping App!" 
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" FontSize="Large"/>
+        <Label Text="Get started bellow!" 
                HorizontalOptions="Center"
                VerticalOptions="CenterAndExpand" />
     </StackLayout>

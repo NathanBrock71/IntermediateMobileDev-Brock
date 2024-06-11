@@ -16,7 +16,7 @@ namespace MappingApp.Services
             _apiKey = "AIzaSyB_8BH_A8GJHq-MwBqMfuxyVzDXihao5C0"; // Replace with your actual API key
         }
 
-        public async Task<string> FetchDirectionsAsync(Location origin, Location destination)
+        public async Task<JObject> ApiCall(Location origin, Location destination)
         {
             var url = "https://routes.googleapis.com/directions/v2:computeRoutes";
 
@@ -66,12 +66,15 @@ namespace MappingApp.Services
             content.Headers.Add("X-Goog-FieldMask", "routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline");
 
             var response = await _httpClient.PostAsync(url, content);
-            var cont = await response.Content.ReadAsStringAsync();
-            var req = $"Request URL: {url}" + $"Request Body: {json}";
             response.EnsureSuccessStatusCode();
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            var responseObject = JObject.Parse(responseContent);
+            return JObject.Parse(responseContent);
+        }
+
+        public async Task<string> FetchDirectionsAsync(Location origin, Location destination)
+        {
+            var responseObject = await ApiCall(origin, destination);
 
             if (responseObject["routes"] != null && responseObject["routes"].Any())
             {
@@ -79,6 +82,61 @@ namespace MappingApp.Services
             }
 
             return null;
+        }
+
+        public async Task<double> FetchDistanceAsync(Location origin, Location destination)
+        {
+            var responseObject = await ApiCall(origin, destination);
+
+            if (responseObject["routes"] != null && responseObject["routes"].Any())
+            {
+                var distance = responseObject["routes"][0]["distanceMeters"].ToString();
+                return ConvertMetersToMiles(distance);
+            }
+
+            return 0.0;
+        }
+
+        public async Task<Tuple<int, int>> FetchDurationAsync(Location origin, Location destination)
+        {
+            var responseObject = await ApiCall(origin, destination);
+
+            if (responseObject["routes"] != null && responseObject["routes"].Any())
+            {
+                var duration = responseObject["routes"][0]["duration"].ToString();
+                return ConvertSecondsToHoursMinutes(duration);
+            }
+
+            return null;
+        }
+
+        public double ConvertMetersToMiles(string meters)
+        {
+            if (double.TryParse(meters, out double metersDouble))
+            {
+                return metersDouble * 0.000621371; // 1 meter = 0.000621371 miles
+            }
+            else
+            {
+                throw new ArgumentException("Invalid input for meters.");
+            }
+        }
+
+        public Tuple<int, int> ConvertSecondsToHoursMinutes(string seconds)
+        {
+            // Remove the 's' character from the input string
+            string numericPart = seconds.Replace("s", "");
+
+            if (int.TryParse(numericPart, out int secondsInt))
+            {
+                var hours = secondsInt / 3600;
+                var minutes = (secondsInt % 3600) / 60;
+                return Tuple.Create(hours, minutes);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid input for seconds.");
+            }
         }
 
         public List<Location> DecodePolyline(string encodedPolyline)

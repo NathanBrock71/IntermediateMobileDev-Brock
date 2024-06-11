@@ -12,6 +12,8 @@
         <maps:Map x:Name="routeMap" 
                   VerticalOptions="FillAndExpand" 
                   IsShowingUser="true" />
+        <Label x:Name="distanceLabel" TextColor="White" Background="Black"/>
+        <Label x:Name="durationLabel"  TextColor="White" Background="Black"/>
         <Button Text="Delete Route" 
         Command="{Binding DeleteRouteCommand}" />
     </StackLayout>

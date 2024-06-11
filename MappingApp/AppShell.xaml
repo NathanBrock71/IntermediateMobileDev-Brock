@@ -10,7 +10,7 @@
     <ShellItem>
         <ShellContent Title="Home" ContentTemplate="{DataTemplate local:MainPage}" />
         <ShellContent Title="Create Route" ContentTemplate="{DataTemplate local:CreateRoutePage}" />
-        <ShellContent Title="Saved Routes" ContentTemplate="{DataTemplate local:SavedRoutesPage}" />
+        <ShellContent Route="SavedRoutesPage" Title="Saved Routes" ContentTemplate="{DataTemplate local:SavedRoutesPage}" />
     </ShellItem>
 
 </Shell>

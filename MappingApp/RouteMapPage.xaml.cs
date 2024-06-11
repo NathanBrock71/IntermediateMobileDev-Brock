@@ -37,12 +37,6 @@ public partial class RouteMapPage : ContentPage
         routeMap.Pins.Add(startPin);
         routeMap.Pins.Add(endPin);
 
-
-        var region = MapSpan.FromCenterAndRadius(
-            new Location((route.StartPoint.Latitude + route.EndPoint.Latitude) / 2,
-                         (route.StartPoint.Longitude + route.EndPoint.Longitude) / 2),
-            Distance.FromMiles(1));
-
         // Fetch and display the route polyline
         var polyline = await _apiService.FetchDirectionsAsync(route.StartPoint, route.EndPoint);
         if (!string.IsNullOrEmpty(polyline))
@@ -62,11 +56,45 @@ public partial class RouteMapPage : ContentPage
                 }
 
                 routeMap.MapElements.Add(mapPolyline);
+
+                // Calculate the bounding box of the polyline and pins
+                double minLat = Math.Min(route.StartPoint.Latitude, route.EndPoint.Latitude);
+                double maxLat = Math.Max(route.StartPoint.Latitude, route.EndPoint.Latitude);
+                double minLng = Math.Min(route.StartPoint.Longitude, route.EndPoint.Longitude);
+                double maxLng = Math.Max(route.StartPoint.Longitude, route.EndPoint.Longitude);
+
+                foreach (var location in locations)
+                {
+                    minLat = Math.Min(minLat, location.Latitude);
+                    maxLat = Math.Max(maxLat, location.Latitude);
+                    minLng = Math.Min(minLng, location.Longitude);
+                    maxLng = Math.Max(maxLng, location.Longitude);
+                }
+
+                // Center the map on the bounding box
+                var centerLat = (minLat + maxLat) / 2;
+                var centerLng = (minLng + maxLng) / 2;
+                var distanceLat = maxLat - minLat;
+                var distanceLng = maxLng - minLng;
+
+                // Set the zoom level based on the distance between the bounding box edges
+                var zoom = Math.Max(distanceLat, distanceLng) * 50; // Adjust zoom level as needed
+
+                var region = MapSpan.FromCenterAndRadius(
+                new Location(centerLat, centerLng),
+                Distance.FromMiles(zoom));
+
+                routeMap.MoveToRegion(region);
             }
         }
 
-        routeMap.MoveToRegion(region);
+        // Fetch distance and duration and set labels
+        var distance = await _apiService.FetchDistanceAsync(route.StartPoint, route.EndPoint);
+        var duration = await _apiService.FetchDurationAsync(route.StartPoint, route.EndPoint);
 
+        // Set the text for the labels
+        distanceLabel.Text = $"{distance:F1} miles";
+        durationLabel.Text = $"{duration.Item1} hours {duration.Item2} minutes";
 
     }
 }
