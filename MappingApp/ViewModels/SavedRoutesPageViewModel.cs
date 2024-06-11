@@ -1,41 +1,49 @@
 ﻿using MappingApp.Models;
-using System;
-using System.Collections.Generic;
+using MappingApp.Services;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace MappingApp.ViewModels
 {
-    public class SavedRoutesPageViewModel
+    public class SavedRoutesPageViewModel : BaseViewModel
     {
-        public ObservableCollection<Route> Routes { get; set; } = new ObservableCollection<Route>();
+        private ObservableCollection<Route> routes;
+
+        public ObservableCollection<Route> Routes
+        {
+            get { return routes; }
+            set { SetProperty(ref routes, value); }
+        }
         public ICommand ViewRouteCommand { get; }
 
         public SavedRoutesPageViewModel()
         {
-            LoadRoutes();
+            Routes = new ObservableCollection<Route>();
+            ViewRouteCommand = new Command<Route>(async (route) => await ViewRoute(route));
+            LoadRoutesAsync(); // Load routes when the view model is initialized
         }
-    }
 
-    private async Task LoadRoutes()
-    {
-        string filePath = Path.Combine(FileSystem.AppDataDirectory, "routes.json");
-
-        if (File.Exists(filePath))
+        public async Task LoadRoutesAsync()
         {
-            string jsonString = await File.ReadAllTextAsync(filePath);
-            var routes = JsonSerializer.Deserialize<List<Route>>(jsonString);
-            if (routes != null)
+            try
             {
-                foreach (var route in routes)
+                var loadedRoutes = await _dbService.GetRoutesAsync();
+                Routes.Clear();
+                foreach (var route in loadedRoutes)
                 {
                     Routes.Add(route);
                 }
             }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+        private async Task ViewRoute(Route route)
+        {
+            // Implement navigation to the route details or map page
         }
     }
 }

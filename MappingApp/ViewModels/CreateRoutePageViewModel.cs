@@ -5,14 +5,15 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using MappingApp.Models;
+using MappingApp.Services;
 
 namespace MappingApp.ViewModels
 {
-    public class CreateRoutePageViewModel
+    public class CreateRoutePageViewModel : BaseViewModel
     {
         private string _startLocation;
         private string _endLocation;
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _routeName;
 
         public string StartLocation
         {
@@ -22,8 +23,14 @@ namespace MappingApp.ViewModels
 
         public string EndLocation
         {
-            get => _endLocation;
-            set => SetProperty(ref _endLocation, value);
+            get { return _endLocation; }
+            set { SetProperty(ref _endLocation, value); }
+        }
+
+        public string RouteName
+        {
+            get { return _routeName; }
+            set { SetProperty(ref _routeName, value); }
         }
 
         public ICommand CreateRouteCommand { get; }
@@ -35,35 +42,28 @@ namespace MappingApp.ViewModels
 
         private async Task CreateRoute()
         {
-            if (string.IsNullOrWhiteSpace(StartLocation) || string.IsNullOrWhiteSpace(EndLocation))
+            if (string.IsNullOrWhiteSpace(StartLocation) || string.IsNullOrWhiteSpace(EndLocation) || string.IsNullOrWhiteSpace(RouteName))
             {
-                Console.WriteLine("Both start and end locations must be provided.");
-                await App.Current.MainPage.DisplayAlert("Error", "Both start and end locations must be provided.", "OK");
+                Console.WriteLine("Name, start and end locations must be provided.");
+                await App.Current.MainPage.DisplayAlert("Error", "Name, start and end locations must be provided.", "OK");
                 return;
             }
 
             try
             {
                 // Create the route
-                Models.Route newRoute = new Models.Route(await CreateLocation(StartLocation), await CreateLocation(EndLocation));
+                Route newRoute = new Route(await CreateLocation(StartLocation), await CreateLocation(EndLocation), RouteName);
 
-                // Serialize the route to a JSON string
-                string jsonString = JsonSerializer.Serialize(newRoute, new JsonSerializerOptions { WriteIndented = true });
+                await _dbService.AddRouteAsync(newRoute);
 
-                // Define the file path
-                string filePath = Path.Combine(FileSystem.AppDataDirectory, "routes.json");
 
-                // Save the JSON string to a file
-                await File.WriteAllTextAsync(filePath, jsonString);
-
-                Console.WriteLine("Route saved successfully.");
             }
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
 
-            // Find out direction/driving routes display
+            
         }
 
         public async Task<Location> CreateLocation(string locationString)
@@ -92,20 +92,6 @@ namespace MappingApp.ViewModels
 
                 return location;
             }
-        }
-
-        bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Object.Equals(storage, value))
-                return false;
-
-            storage = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

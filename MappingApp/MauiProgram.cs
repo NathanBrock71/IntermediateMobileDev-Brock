@@ -19,6 +19,7 @@ namespace MappingApp
                 });
 
             builder.Services.AddSingleton<APIServices>();
+            builder.Services.AddSingleton<JsonDbService>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

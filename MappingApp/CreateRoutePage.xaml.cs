@@ -9,7 +9,7 @@ public partial class CreateRoutePage : ContentPage
     public CreateRoutePage()
     {
         InitializeComponent();
-        BindingContext = new CreateRoutePageViewModel(); ;
+        BindingContext = new CreateRoutePageViewModel();
     }
 
     private void OnMapClicked(object sender, MapClickedEventArgs e)
@@ -45,9 +45,14 @@ public partial class CreateRoutePage : ContentPage
         if (entry == null) return;
 
         string address = entry.Text;
-        IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+        Location location = null;
 
-        Location location = locations?.FirstOrDefault();
+        if (address != null)
+        {
+            IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(address);
+
+            location = locations?.FirstOrDefault();
+        }
 
         if (location == null)
         {

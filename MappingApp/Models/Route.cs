@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace MappingApp.Models
 {
-    public class Route
+    public class Route(Location startPoint, Location endPoint, string name)
     {
-        Location StartPoint { get; set; }
-        Location EndPoint { get; set; }
-        public Route(Location startPoint, Location endPoint)
-        {
-            StartPoint = startPoint;
-            EndPoint = endPoint;
-        }
+        public string Name { get; set; } = name;
+        public Location StartPoint { get; set; } = startPoint;
+        public Location EndPoint { get; set; } = endPoint;
     }
 }

@@ -8,11 +8,6 @@
         <Label Text="Welcome to Your App!" 
                HorizontalOptions="Center"
                VerticalOptions="CenterAndExpand" />
-
-        <Button Text="Create Route" 
-                Command="{Binding NavigateToCreateRouteCommand}" />
-        <Button Text="Saved Routes" 
-                Command="{Binding NavigateToSavedRoutesCommand}" />
     </StackLayout>
 
 </ContentPage>

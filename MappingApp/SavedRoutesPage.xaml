@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MappingApp.ViewModels"
              x:Class="MappingApp.SavedRoutesPage"
              Title="SavedRoutesPage">
     <ContentPage.BindingContext>
-        <local:RoutesListViewModel />
+        <viewModels:SavedRoutesPageViewModel />
     </ContentPage.BindingContext>
-
-    <CollectionView ItemsSource="{Binding Routes}"
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Routes}"
                     SelectionMode="Single"
                     SelectionChanged="OnRouteSelected">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout Padding="10">
-                    <Label Text="{Binding StartLocation}" />
-                    <Label Text="{Binding EndLocation}" />
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Name, StringFormat='{0:F2}'}" TextColor="White" Background="Black"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
 </ContentPage>

@@ -10,6 +10,9 @@
                   VerticalOptions="FillAndExpand" 
                   IsShowingUser="true" 
                   MapClicked="OnMapClicked" />
+        <Entry Placeholder="Route Name" 
+               x:Name="routeName" 
+               Text="{Binding RouteName, Mode=TwoWay}"/>
         <Entry Placeholder="Start Location" 
                x:Name="startLocationEntry" 
                Text="{Binding StartLocation, Mode=TwoWay}"
