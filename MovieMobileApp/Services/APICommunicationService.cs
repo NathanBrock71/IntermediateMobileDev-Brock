@@ -13,7 +13,7 @@ namespace MovieMobileApp.Services
         public APICommunicationService()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://73c9-2600-6c44-7af0-8b10-d94d-c9ec-2587-88a.ngrok-free.app/api/");
+            _httpClient.BaseAddress = new Uri("https://302a-2600-6c44-7af0-8b10-d94d-c9ec-2587-88a.ngrok-free.app/api/");
         }
 
         public async Task<string> GetAllMoviesAsync()
