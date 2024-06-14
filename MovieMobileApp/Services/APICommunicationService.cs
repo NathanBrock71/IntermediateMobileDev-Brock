@@ -30,7 +30,7 @@ namespace MovieMobileApp.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> CreateMovieAsync(string id, string title, string description, string director, string rating, string releaseDate, string reviewScore)
+        public async Task<string> CreateMovieAsync(string id, string title, string description, string director, string rating, string releaseDate, string reviewScore, string posterUrl)
         {
             var movie = new
             {
@@ -40,7 +40,8 @@ namespace MovieMobileApp.Services
                 director,
                 rating,
                 releaseDate,
-                reviewScore
+                reviewScore,
+                posterUrl
             };
 
             var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(movie), Encoding.UTF8, "application/json");
@@ -49,7 +50,7 @@ namespace MovieMobileApp.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> UpdateMovieAsync(string id, string title, string description, string director, string rating, string releaseDate, string reviewScore)
+        public async Task<string> UpdateMovieAsync(string id, string title, string description, string director, string rating, string releaseDate, string reviewScore, string posterUrl)
         {
             var movie = new
             {
@@ -59,7 +60,8 @@ namespace MovieMobileApp.Services
                 director,
                 rating,
                 releaseDate,
-                reviewScore
+                reviewScore,
+                posterUrl
             };
 
             var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(movie), Encoding.UTF8, "application/json");

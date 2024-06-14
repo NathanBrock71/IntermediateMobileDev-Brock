@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieMobileApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace CoffeeAppSpring2024inclass.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        //private readonly IDataService<Item> _dataService;
+        protected readonly APICommunicationService _apiServices;
 
-        //using dependency injection to inject the data service into the view model
         public BaseViewModel()
         {
+            _apiServices = new APICommunicationService();
         }
 
         bool _isBusy = false;

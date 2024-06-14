@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MovieMobileApp.Views;
 
 namespace MovieMobileApp.ViewModels
 {
@@ -31,7 +32,7 @@ namespace MovieMobileApp.ViewModels
         {
             _apiService = new APICommunicationService();
             Movies = new ObservableCollection<Movie>();
-            AddItemCommand = new Command(OnAddItem);
+            AddItemCommand = new Command(OnAdd);
             FetchMovies();
         }
 
@@ -46,9 +47,10 @@ namespace MovieMobileApp.ViewModels
             Movies = new ObservableCollection<Movie>(movieList);
         }
 
-        private void OnAddItem()
+        private async void OnAdd()
         {
-            // Logic for adding a new item (navigate to a new page, etc.)
+            var formPage = new AddMovie();
+            await Application.Current.MainPage.Navigation.PushAsync(formPage);
         }
     }
 }

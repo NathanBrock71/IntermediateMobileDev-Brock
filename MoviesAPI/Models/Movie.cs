@@ -32,7 +32,7 @@ namespace MoviesAPI.Models
         public string ReviewScore { get; set; }
 
         [MaxLength(200, ErrorMessage = "Max url lenght is 200")]
-        public string PosterUrl { get; set; }
+        public string? PosterUrl { get; set; }
 
         public Movie() { }
 

@@ -2,11 +2,46 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieMobileApp.Views.AddMovie"
+             xmlns:vm="clr-namespace:MovieMobileApp.ViewModels"
              Title="AddMovie">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <vm:AddMovieViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Entry Placeholder="Title" Text="{Binding Title}" MaxLength="100"/>
+            <Label Text="{Binding TitleError}" TextColor="Red" IsVisible="{Binding IsTitleErrorVisible}"/>
+
+            <Editor Placeholder="Description" Text="{Binding Description}" MaxLength="1000"/>
+            <Label Text="{Binding DescriptionError}" TextColor="Red" IsVisible="{Binding IsDescriptionErrorVisible}"/>
+
+            <Entry Placeholder="Director" Text="{Binding Director}" MaxLength="50"/>
+            <Label Text="{Binding DirectorError}" TextColor="Red" IsVisible="{Binding IsDirectorErrorVisible}"/>
+
+            <Entry Placeholder="Review Score" Text="{Binding ReviewScore}" Keyboard="Numeric"/>
+            <Label Text="{Binding ReviewScoreError}" TextColor="Red" IsVisible="{Binding IsReviewScoreErrorVisible}"/>
+
+            <Entry Placeholder="Release Date (MM/DD/YYYY)" Text="{Binding ReleaseDate}" MaxLength="10"/>
+            <Label Text="{Binding ReleaseDateError}" TextColor="Red" IsVisible="{Binding IsReleaseDateErrorVisible}"/>
+
+            <Label Text="Rating" />
+            <Picker Title="Select Rating" SelectedItem="{Binding Rating}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>G</x:String>
+                        <x:String>PG</x:String>
+                        <x:String>PG-13</x:String>
+                        <x:String>R</x:String>
+                        <x:String>NC-17</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Entry Placeholder="Poster URL" Text="{Binding PosterUrl}" MaxLength="200"/>
+            <Label Text="{Binding PosterUrlError}" TextColor="Red" IsVisible="{Binding IsPosterUrlErrorVisible}"/>
+
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

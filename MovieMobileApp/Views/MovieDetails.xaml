@@ -2,11 +2,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieMobileApp.Views.MovieDetails"
+             xmlns:vm="clr-namespace:MovieMobileApp.ViewModels"
              Title="MovieDetails">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <vm:MovieDetailsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/Styles/MovieListStyles.xaml"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10">
+                <Label Style="{StaticResource MovieTitleLabelStyle}" Text="{Binding Movie.Title}"/>
+                <Image Style="{StaticResource MovieImageStyle}" Source="{Binding Movie.PosterUrl}"/>
+                <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.Director, StringFormat='Director: {0}'}"/>
+                <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.Rating}"/>
+                <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.ReleaseDate, StringFormat='Release Date: {0:MMMM dd, yyyy}'}"/>
+                <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.ReviewScore, StringFormat='Rating: {0}/10'}"/>
+                <Label Style="{StaticResource MovieDetailLabelStyle}" Margin="0,0,0,10" Text="{Binding Movie.Description}"/>
+
+                <Button Style="{StaticResource MovieDetailButtonStyle}" Text="Edit" Command="{Binding EditCommand}" />
+                <Button Style="{StaticResource MovieDetailButtonStyle}" Text="Delete" Command="{Binding DeleteCommand}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

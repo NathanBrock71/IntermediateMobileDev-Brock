@@ -30,5 +30,8 @@ namespace MovieMobileApp.Model
 
         [JsonPropertyName("reviewScore")]
         public string ReviewScore { get; set; }
+
+        [JsonPropertyName("posterUrl")]
+        public string PosterUrl { get; set;}
     }
 }

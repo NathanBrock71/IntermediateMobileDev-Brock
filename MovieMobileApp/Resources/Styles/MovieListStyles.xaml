@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieMobileApp.Resources.Styles.MovieListStyles">
+    
+    <!-- Movie Item Container Style -->
+    <Style x:Key="MovieItemContainerStyle" TargetType="StackLayout">
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
+    <!-- Image Style -->
+    <Style x:Key="MovieImageStyle" TargetType="Image">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="MaximumWidthRequest" Value="{Binding Source={x:Reference Page}, Path=Width}"/>
+        <Setter Property="Aspect" Value="AspectFit"/>
+        <Setter Property="Margin" Value="0,0,0,20"/>
+    </Style>
+
+    <!-- Label Styles -->
+    <Style x:Key="MovieTitleLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="Padding" Value="0,0,0,20"/>
+    </Style>
+    <Style x:Key="MovieDetailLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <!-- Button Styles -->
+    <Style x:Key="MovieDetailButtonStyle" TargetType="Label">
+        <Setter Property="Margin" Value="6"/>
+    </Style>
+</ResourceDictionary>
