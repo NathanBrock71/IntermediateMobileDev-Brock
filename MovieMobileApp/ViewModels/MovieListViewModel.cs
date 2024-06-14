@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MovieMobileApp.Views;
+using CoffeeAppSpring2024inclass.ViewModels;
 
 namespace MovieMobileApp.ViewModels
 {
-    public class MovieListViewModel : BindableObject
+    public class MovieListViewModel : BaseViewModel
     {
-        private readonly APICommunicationService _apiService;
         private ObservableCollection<Movie> _movies;
 
         public ObservableCollection<Movie> Movies
@@ -21,8 +21,7 @@ namespace MovieMobileApp.ViewModels
             get => _movies;
             set
             {
-                _movies = value;
-                OnPropertyChanged();
+                SetProperty(ref _movies, value);
             }
         }
 
@@ -30,15 +29,14 @@ namespace MovieMobileApp.ViewModels
 
         public MovieListViewModel()
         {
-            _apiService = new APICommunicationService();
             Movies = new ObservableCollection<Movie>();
             AddItemCommand = new Command(OnAdd);
             FetchMovies();
         }
 
-        private async void FetchMovies()
+        public async void FetchMovies()
         {
-            var movies = await _apiService.GetAllMoviesAsync();
+            var movies = await _apiServices.GetAllMoviesAsync();
             var options = new System.Text.Json.JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true

@@ -40,6 +40,7 @@ namespace MovieMobileApp.ViewModels
             formViewModel.ReviewScore = Movie.ReviewScore.ToString();
             formViewModel.ReleaseDate = Movie.ReleaseDate.ToString();
             formViewModel.PosterUrl = Movie.PosterUrl;
+            formViewModel.Id = Movie.Id.ToString();
 
             await Application.Current.MainPage.Navigation.PushAsync(formPage);
         }
@@ -51,6 +52,7 @@ namespace MovieMobileApp.ViewModels
             {
                 await _apiServices.DeleteMovieAsync(Movie.Id.ToString());
                 await Application.Current.MainPage.DisplayAlert("Deleted", "Movie has been deleted", "OK");
+                await Application.Current.MainPage.Navigation.PushAsync(new MovieList());
             }
         }
 

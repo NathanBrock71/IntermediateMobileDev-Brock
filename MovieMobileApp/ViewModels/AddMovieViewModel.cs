@@ -1,5 +1,6 @@
 ﻿using Android.Media;
 using CoffeeAppSpring2024inclass.ViewModels;
+using MovieMobileApp.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -190,7 +191,7 @@ namespace MovieMobileApp.ViewModels
 
         private async void OnSave()
         {
-            if (Validate())
+            if (await Validate())
             {
                 if (Id != null)
                 {
@@ -199,16 +200,18 @@ namespace MovieMobileApp.ViewModels
                 {
                     await _apiServices.CreateMovieAsync(new Guid().ToString(), Title, Description, Director, Rating, ReleaseDate, ReviewScore, PosterUrl);
                 }
-            }
+                await Application.Current.MainPage.Navigation.PushAsync(new MovieList());
+            }            
         }
 
-        private bool Validate()
+        private async Task<bool> Validate()
         {
             bool isValid = true;
 
             if (string.IsNullOrEmpty(Title) || Title.Length > 100)
             {
                 TitleError = "Title is required and must be less than 100 characters.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Title", TitleError, "OK");
                 isValid = false;
             }
             else
@@ -219,6 +222,7 @@ namespace MovieMobileApp.ViewModels
             if (string.IsNullOrEmpty(Description) || Description.Length > 1000)
             {
                 DescriptionError = "Description is required and must be less than 1000 characters.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Description", DescriptionError, "OK");
                 isValid = false;
             }
             else
@@ -229,6 +233,7 @@ namespace MovieMobileApp.ViewModels
             if (string.IsNullOrEmpty(Director) || Director.Length > 50)
             {
                 DirectorError = "Director is required and must be less than 50 characters.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Director", DirectorError, "OK");
                 isValid = false;
             }
             else
@@ -239,6 +244,7 @@ namespace MovieMobileApp.ViewModels
             if (!double.TryParse(ReviewScore, out double reviewScoreValue) || reviewScoreValue < 0 || reviewScoreValue > 10)
             {
                 ReviewScoreError = "Review score must be a number between 0 and 10.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Review score", ReviewScoreError, "OK");
                 isValid = false;
             }
             else
@@ -249,6 +255,7 @@ namespace MovieMobileApp.ViewModels
             if (string.IsNullOrEmpty(ReleaseDate) || !Regex.IsMatch(ReleaseDate, @"^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$"))
             {
                 ReleaseDateError = "Release date must be in the format MM/DD/YYYY.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Release Date", ReleaseDateError, "OK");
                 isValid = false;
             }
             else
@@ -259,6 +266,7 @@ namespace MovieMobileApp.ViewModels
             if (!string.IsNullOrEmpty(PosterUrl) && PosterUrl.Length > 200)
             {
                 PosterUrlError = "Poster URL must be less than 200 characters.";
+                await Application.Current.MainPage.DisplayAlert("Invalid Poster url", PosterUrlError, "OK");
                 isValid = false;
             }
             else
