@@ -71,6 +71,7 @@ namespace MoviesAPI.Controllers
             existingMovie.Rating = movie.Rating;
             existingMovie.ReleaseDate = movie.ReleaseDate;
             existingMovie.ReviewScore = movie.ReviewScore;
+            existingMovie.PosterUrl = movie.PosterUrl;
 
             _dbServices.UpdateMovie(existingMovie);
             // This method returns an empty response with a status code of 204 (No Content)

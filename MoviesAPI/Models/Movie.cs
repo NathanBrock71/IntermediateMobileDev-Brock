@@ -31,9 +31,12 @@ namespace MoviesAPI.Models
         [MaxLength(7, ErrorMessage = "Max ReviewScore Length is 7")]
         public string ReviewScore { get; set; }
 
+        [MaxLength(200, ErrorMessage = "Max url lenght is 200")]
+        public string PosterUrl { get; set; }
+
         public Movie() { }
 
-        public Movie(string title, string description, string rating, string releaseDate, string reviewScore)
+        public Movie(string title, string description, string rating, string releaseDate, string reviewScore, string posterUrl)
         {
             Id = Guid.NewGuid();
             Title = title;
@@ -41,6 +44,7 @@ namespace MoviesAPI.Models
             Rating = rating;
             ReleaseDate = releaseDate;
             ReviewScore = reviewScore;
+            PosterUrl = posterUrl;
         }
     }
 }

@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MovieMobileApp"
+    xmlns:views="clr-namespace:MovieMobileApp.Views"
     Title="MovieMobileApp">
 
 
@@ -14,9 +15,14 @@
             <ShellContent Title="Home" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Test">
+    <FlyoutItem Title="All Movies">
         <Tab>
-            <ShellContent/>
+            <ShellContent Title="All Movies" ContentTemplate="{DataTemplate views:MovieList}" Route="MovieList" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Add Movie">
+        <Tab>
+            <ShellContent Title="AddMovie" ContentTemplate="{DataTemplate views:AddMovie}" Route="AddMovie" />
         </Tab>
     </FlyoutItem>
 
