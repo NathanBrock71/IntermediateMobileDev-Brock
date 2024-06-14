@@ -10,14 +10,16 @@
 
             <Label
                 Text="Hello, Welcome to Nathan's Movie App"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+                Style="{StaticResource Headline}"/>
+
+            <Image Source="https://kettleheroes.com/wp-content/uploads/2022/02/Why-is-Popcorn-a-Movie-Food.jpg"/>
 
             <Label
                 Text="This is an app about all of Nathan's favorite movies"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                Style="{StaticResource SubHeadline}"/>
+
+            <Label
+                Text="This app was made for an API assignment. We created our own API, linked to a database, placed those in docker containers, and then made an app to consume the API. Ngrok was then used to help all of these componenets communicate."/>
 
         </VerticalStackLayout>
     </ScrollView>

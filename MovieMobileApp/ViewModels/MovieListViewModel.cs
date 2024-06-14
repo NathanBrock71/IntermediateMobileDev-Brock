@@ -42,6 +42,15 @@ namespace MovieMobileApp.ViewModels
                 PropertyNameCaseInsensitive = true
             };
             var movieList = System.Text.Json.JsonSerializer.Deserialize<List<Movie>>(movies, options);
+
+            foreach(Movie m in movieList)
+            {
+                if (m.PosterUrl == null)
+                {
+                    m.PosterUrl = "https://www.reelviews.net/resources/img/default_poster.jpg";
+                }
+            }
+
             Movies = new ObservableCollection<Movie>(movieList);
         }
 

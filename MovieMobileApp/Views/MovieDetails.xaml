@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieMobileApp.Views.MovieDetails"
              xmlns:vm="clr-namespace:MovieMobileApp.ViewModels"
-             Title="MovieDetails">
+             Title="Movie Details">
     <ContentPage.BindingContext>
         <vm:MovieDetailsViewModel />
     </ContentPage.BindingContext>
@@ -11,6 +11,11 @@
     <ContentPage.Resources>
         <ResourceDictionary Source="../Resources/Styles/MovieListStyles.xaml"/>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" Command="{Binding EditCommand}" />
+        <ToolbarItem Text="Delete" Command="{Binding DeleteCommand}" />
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <ScrollView>
@@ -22,9 +27,6 @@
                 <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.ReleaseDate, StringFormat='Release Date: {0:MMMM dd, yyyy}'}"/>
                 <Label Style="{StaticResource MovieDetailLabelStyle}" Text="{Binding Movie.ReviewScore, StringFormat='Rating: {0}/10'}"/>
                 <Label Style="{StaticResource MovieDetailLabelStyle}" Margin="0,0,0,10" Text="{Binding Movie.Description}"/>
-
-                <Button Style="{StaticResource MovieDetailButtonStyle}" Text="Edit" Command="{Binding EditCommand}" />
-                <Button Style="{StaticResource MovieDetailButtonStyle}" Text="Delete" Command="{Binding DeleteCommand}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
